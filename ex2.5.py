@@ -43,7 +43,3 @@ file = open('large-file.json', 'r', encoding='utf-8')
 data = json.load(file)
 
 
-output_data = data[::-1]
-with open("output.2.3.json", "w") as output_file:
-    json.dump(output_data, output_file, indent=2)
-
