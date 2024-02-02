@@ -1,6 +1,8 @@
 import json
 import collections.abc
 import timeit
+import numpy as np
+import matplotlib.pyplot as plt
 
 
 
@@ -20,30 +22,33 @@ def check(dictionary):
             for item in dictionary[record]:
                 if isinstance(item, dict):
                     check(item)
-def forloop(dat):
+def forloop(dat, numRecords):
+    i = 0
     for ary in dat:
-        check(ary)'''
+        if i > numRecords: break
+        check(ary)
+        i+=1'''
 
 
 
 
-time = timeit.repeat(setup=setupcode, stmt='forloop(data)', repeat = 10, number = 1)
-print(time)
-total = 0
-for x in time:
-    total += x
-print("average execution time is", total/10)
-#for record in data:
-#   record["size"] = 35
-#   if isinstance(record, dict):
+times1000 = timeit.repeat(setup=setupcode, stmt='forloop(data, 1000)', repeat = 100, number = 1)
+times2000 = timeit.repeat(setup=setupcode, stmt='forloop(data, 2000)', repeat = 100, number = 1)
+times5000 = timeit.repeat(setup=setupcode, stmt='forloop(data, 5000)', repeat = 100, number = 1)
+times10000 = timeit.repeat(setup=setupcode, stmt='forloop(data, 10000)', repeat = 100, number = 1)
 
-#for ary in data:
-#    check(ary)
-file = open('large-file.json', 'r', encoding='utf-8')
-data = json.load(file)
+averages = []
+averages.append(sum(times1000)/len(times1000))
+averages.append(sum(times2000)/len(times2000))
+averages.append(sum(times5000)/len(times5000))
+averages.append(sum(times10000)/len(times10000))
 
-
-output_data = data[::-1]
-with open("output.2.3.json", "w") as output_file:
-    json.dump(output_data, output_file, indent=2)
-
+listlengths = [1000, 2000, 5000, 10000]
+slope, intercept = np.polyfit(listlengths, averages, 1)
+plt.scatter(listlengths, averages)
+linevalues = [slope * x + intercept for x in listlengths]
+plt.plot(listlengths, linevalues, 'r')
+plt.xlabel("number of records")
+plt.ylabel("average computation time")
+plt.title("Linear regression plot of Average computation time as a function of the number of records being searched")
+plt.show()

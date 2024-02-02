@@ -33,12 +33,8 @@ total = 0
 for x in time:
     total += x
 print("average execution time is", total/10)
-#for record in data:
-#   record["size"] = 35
-#   if isinstance(record, dict):
 
-#for ary in data:
-#    check(ary)
+
 file = open('large-file.json', 'r', encoding='utf-8')
 data = json.load(file)
 
