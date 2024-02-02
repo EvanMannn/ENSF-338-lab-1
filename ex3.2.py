@@ -32,7 +32,7 @@ def forloop(dat, numRecords):
 
 
 
-times1000 = timeit.repeat(setup=setupcode, stmt='forloop(data, 1000)', repeat = 100, number = 1)
+times1000 = timeit.repeat(setup=setupcode, stmt='forloop(data, 1000)', repeat = 1, number = 1)
 times2000 = timeit.repeat(setup=setupcode, stmt='forloop(data, 2000)', repeat = 100, number = 1)
 times5000 = timeit.repeat(setup=setupcode, stmt='forloop(data, 5000)', repeat = 100, number = 1)
 times10000 = timeit.repeat(setup=setupcode, stmt='forloop(data, 10000)', repeat = 100, number = 1)
